@@ -19,4 +19,8 @@ public class PlayerMovement : MonoBehaviour
     //    transform.position = new Vector3(_distanceToHole * Mathf.Sin(_currentAngle), transform.position.y, _distanceToHole * Mathf.Cos(_currentAngle));
     //    _currentAngle += _angularSpeed;
     //}
+    void Start()
+    {
+        Debug.Log("player movement");
+    }
 }
