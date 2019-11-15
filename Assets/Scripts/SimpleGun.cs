@@ -1,21 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class ShootingScript : MonoBehaviour
+public class SimpleGun : MonoBehaviour, IWeapon
 {
-    [System.Serializable]
-    public class Pool
-    {
-        public string tag;
-        public GameObject prefab;
-        public Transform transform;
-        public int size;
-    }
-
     #region Singleton
 
-    public static ShootingScript Instance;
+    public static SimpleGun Instance;
 
     private void Awake()
     {
@@ -29,11 +21,38 @@ public class ShootingScript : MonoBehaviour
     private void Start()
     {
         MakePools();
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            StartShooting();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StopShooting();
+        }
+    }
+
+    public void StartShooting()
+    {
         InvokeRepeating("FullShoot", 0, 0.1f);
     }
 
-    void MakePools()
+    public void StopShooting()
+    {
+        CancelInvoke("FullShoot");
+        foreach (Pool pool in pools)
+        {
+            foreach(GameObject element in poolDictionary[pool.tag])
+            {
+                element.SetActive(false);
+            }
+        }
+    }
+
+    public void MakePools()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
@@ -50,10 +69,9 @@ public class ShootingScript : MonoBehaviour
 
             poolDictionary.Add(pool.tag, objectPool);
         }
-
     }
 
-    void FullShoot()
+    public void FullShoot()
     {
         foreach (Pool pool in pools)
         {
@@ -65,7 +83,6 @@ public class ShootingScript : MonoBehaviour
     {
         if (!poolDictionary.ContainsKey(pool.tag))
         {
-            Debug.LogWarning("Pool with tag" + pool.tag + " doesn't exist.");
             return null;
         }
 
@@ -78,5 +95,20 @@ public class ShootingScript : MonoBehaviour
         objectToSpawn.GetComponent<Rigidbody>().velocity = objectToSpawn.transform.TransformDirection(new Vector3(0, 0, -100));
         poolDictionary[pool.tag].Enqueue(objectToSpawn);
         return objectToSpawn;
+    }
+
+    public void MakeSound()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void StartAnimation()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void StopAnimation()
+    {
+        throw new System.NotImplementedException();
     }
 }
