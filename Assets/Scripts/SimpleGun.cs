@@ -111,4 +111,9 @@ public class SimpleGun : MonoBehaviour, IWeapon
     {
         throw new System.NotImplementedException();
     }
+
+    public void SetWeapon()
+    {
+        throw new System.NotImplementedException();
+    }
 }
