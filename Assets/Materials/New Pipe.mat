@@ -77,7 +77,7 @@ Material:
     - _Surface: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
-    - _invis: -1
+    - _invis: -1.02
     m_Colors:
     - Color_64767AC6: {r: 0, g: 2.133333, b: 17.759161, a: 0}
     - Color_B315A8F3: {r: 0.6156863, g: 0.6784314, b: 0.7294118, a: 0}

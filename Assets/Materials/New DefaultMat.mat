@@ -149,7 +149,7 @@ Material:
     - _WindQuality: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _invis: -1
+    - _invis: -1.02
     m_Colors:
     - Color_64767AC6: {r: 0, g: 2.133333, b: 16, a: 0}
     - Color_B315A8F3: {r: 1, g: 1, b: 1, a: 0}
