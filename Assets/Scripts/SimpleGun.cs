@@ -25,11 +25,11 @@ public class SimpleGun : MonoBehaviour, IWeapon
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.touchCount>0)
         {
             StartShooting();
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.touchCount == 0)
         {
             StopShooting();
         }
