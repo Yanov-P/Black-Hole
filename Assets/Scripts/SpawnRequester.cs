@@ -19,4 +19,6 @@ public class SpawnRequester : MonoBehaviour
             m_Spawn.transform.position = _listOfTransforms[Random.Range(0, _listOfTransforms.Count)].position;
         }
     }
+
+    
 }

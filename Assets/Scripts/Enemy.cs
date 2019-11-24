@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, ICopyable
 {
     protected float hp;
-    bool _isFree;
     public ICopyable Copy()
     {
         return Instantiate(this);
@@ -19,5 +18,4 @@ public class Enemy : MonoBehaviour, ICopyable
             Destroy(gameObject);
         }
     }
-
 }
