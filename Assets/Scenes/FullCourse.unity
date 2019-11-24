@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 170781260}
   - component: {fileID: 170781259}
   m_Layer: 0
-  m_Name: horizontalwave_down
+  m_Name: f
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,8 +310,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c42a4e23772875a4aac38d8003f72dce, type: 2}
-  - {fileID: 2100000, guid: c42a4e23772875a4aac38d8003f72dce, type: 2}
+  - {fileID: 2100000, guid: 453178f5ed55d4c41aa643f32efd2e77, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -545,7 +545,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.4716981, g: 0.33152366, b: 0.33152366, a: 0.2509804}
+      maxColor: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 0.2509804}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1058,7 +1058,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 0}
+    m_Texture: {fileID: 2800000, guid: 378986710e7d4804587d5521a63d9a2a, type: 3}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -20129,7 +20129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1117575288
 Transform:
   m_ObjectHideFlags: 0
@@ -20162,7 +20162,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c42a4e23772875a4aac38d8003f72dce, type: 2}
+  - {fileID: 2100000, guid: 786f66eb3cb460947afe6fd38bf320b5, type: 2}
   - {fileID: 2100000, guid: c42a4e23772875a4aac38d8003f72dce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

@@ -25,11 +25,11 @@ public class SimpleGun : MonoBehaviour, IWeapon
 
     private void Update()
     {
-        if (Input.touchCount>0)
+        if (Input.GetKeyDown(KeyCode.S))
         {
             StartShooting();
         }
-        if (Input.touchCount == 0)
+        if (Input.GetKeyDown(KeyCode.E))
         {
             StopShooting();
         }
@@ -37,15 +37,22 @@ public class SimpleGun : MonoBehaviour, IWeapon
 
     public void StartShooting()
     {
+        CancelInvoke("SetOffBullets");
+
         InvokeRepeating("FullShoot", 0, 0.1f);
     }
 
     public void StopShooting()
     {
         CancelInvoke("FullShoot");
+        Invoke("SetOffBullets", 2);
+    }
+
+    public void SetOffBullets()
+    {
         foreach (Pool pool in pools)
         {
-            foreach(GameObject element in poolDictionary[pool.tag])
+            foreach (GameObject element in poolDictionary[pool.tag])
             {
                 element.SetActive(false);
             }
