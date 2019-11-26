@@ -32,7 +32,7 @@ public class ControlPanel : MonoBehaviour, IEndDragHandler, IDragHandler, IBegin
     public void OnDrag(PointerEventData eventData)
     {
         _currentOffset = eventData.position - _startPos;
-        _playerMovement.Move(_currentOffset/200);
+        _playerMovement.Move(_currentOffset/50);
         
     }
 

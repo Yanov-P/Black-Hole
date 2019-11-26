@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
         if (_poolOfMeteors.Count < 10)
         {
             m_Copy = prototype.Copy();
-            _poolOfMeteors.Add(m_Copy, true);
+            _poolOfMeteors.Add(m_Copy, false);
             return (Enemy)m_Copy;
         }
         else {

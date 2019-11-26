@@ -14,11 +14,23 @@ public class SpawnRequester : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            m_Spawn = m_Spawner.SpawnEnemy(m_Meteor);
-            m_Spawn.name = "Drone_Clone_" + ++m_IncrementorDrone;
-            m_Spawn.transform.position = _listOfTransforms[Random.Range(0, _listOfTransforms.Count)].position;
+            StartSpawn();
+            Debug.Log(Spawner._poolOfMeteors.Count);
         }
+        
     }
 
-    
+    void StartSpawn()
+    {
+        CancelInvoke("Spawn");
+        InvokeRepeating("Spawn", 0, 1.5f);
+    }
+
+    public void Spawn()
+    {
+        m_Spawn = m_Spawner.SpawnEnemy(m_Meteor);
+        m_Spawn.gameObject.SetActive(true);
+        m_Spawn.name = "Drone_Clone_" + ++m_IncrementorDrone;
+        m_Spawn.transform.position = _listOfTransforms[Random.Range(0, _listOfTransforms.Count)].position;
+    }
 }

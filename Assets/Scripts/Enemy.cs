@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, ICopyable
@@ -15,7 +16,15 @@ public class Enemy : MonoBehaviour, ICopyable
         hp -= damage;
         if (hp <= 0)
         {
-            Destroy(gameObject);
+            var instance = Spawner._poolOfMeteors.First(kvp => (Object)kvp.Key == this).Key;
+            Spawner._poolOfMeteors[instance] = true;
+            hp = 10;
+            gameObject.SetActive(false);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        collision.gameObject.GetComponent<ICartridge>().MakeDamage(this);
     }
 }

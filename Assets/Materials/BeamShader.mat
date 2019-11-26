@@ -36,4 +36,4 @@ Material:
     m_Colors:
     - Color_88ECF3AB: {r: 5.2164755, g: 5.2164755, b: 5.2164755, a: 0.6431373}
     - Vector2_3D86C896: {r: 0, g: 0, b: 0, a: 0}
-    - Vector2_7ED7522F: {r: 5, g: 0, b: 0, a: 0}
+    - Vector2_7ED7522F: {r: 0, g: 0, b: 0, a: 0}

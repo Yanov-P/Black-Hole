@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IWeapon
 {
+
     void SetWeapon();
     void StartAnimation();
     void StopAnimation();

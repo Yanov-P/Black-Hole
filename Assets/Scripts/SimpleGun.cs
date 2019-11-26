@@ -23,17 +23,7 @@ public class SimpleGun : MonoBehaviour, IWeapon
         MakePools();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            StartShooting();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StopShooting();
-        }
-    }
+   
 
     public void StartShooting()
     {

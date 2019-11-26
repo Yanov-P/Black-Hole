@@ -31,7 +31,7 @@ public class LaserGun : MonoBehaviour,  IWeapon
 
     public void StartShooting()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(true);
     }
 
     public void StopAnimation()
@@ -41,7 +41,8 @@ public class LaserGun : MonoBehaviour,  IWeapon
 
     public void StopShooting()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
+
     }
 
     // Start is called before the first frame update
