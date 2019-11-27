@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LaserGun : MonoBehaviour,  IWeapon
 {
+    public Transform  firePoint;
+    public LineRenderer lR;
+    float distance;
+    int i = 0;
     public void MakePools()
     {
         throw new System.NotImplementedException();
@@ -31,7 +35,9 @@ public class LaserGun : MonoBehaviour,  IWeapon
 
     public void StartShooting()
     {
+        distance = 0;
         gameObject.SetActive(true);
+        InvokeRepeating("Shoot", 0, Time.deltaTime);
     }
 
     public void StopAnimation()
@@ -42,18 +48,29 @@ public class LaserGun : MonoBehaviour,  IWeapon
     public void StopShooting()
     {
         gameObject.SetActive(false);
-
+        CancelInvoke("Shoot");
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void Shoot()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, distance))
+        {
+            
+            lR.SetPosition(0, new Vector3(0, 0, 0));
+            lR.SetPosition(1, Vector3.forward * hit.distance);
+            distance = hit.distance;
+            i++;
+            if (i % 2 == 0)
+            {
+                hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(1);
+            }
+        }
+        else
+        {
+            lR.SetPosition(0, new Vector3(0, 0, 0));
+            lR.SetPosition(1, Vector3.forward * distance);
+            if (distance < 100) distance += 1f;
+        }
     }
 }
