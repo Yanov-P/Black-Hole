@@ -9,5 +9,6 @@ public class BulletBehaviour : MonoBehaviour,ICartridge
     public void MakeDamage(Enemy enemy)
     {
         enemy.TakeDamage(_bulletsDamage);
+        gameObject.SetActive(false);
     }
 }

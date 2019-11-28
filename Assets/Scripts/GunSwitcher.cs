@@ -11,7 +11,7 @@ public class GunSwitcher : MonoBehaviour
          */
     public void SwitchWeapon(int i)
     {
-        _listOfWeapons.ForEach(k => k.GetComponent<IWeapon>().StopShooting());
+        OffAllWeapons();
         _listOfWeapons[i].GetComponent<IWeapon>().StartShooting();
     }
 
@@ -26,4 +26,11 @@ public class GunSwitcher : MonoBehaviour
             SwitchWeapon(1);
         }
     }
+
+    public void OffAllWeapons()
+    {
+        _listOfWeapons.ForEach(k => k.GetComponent<IWeapon>().StopShooting());
+    }
+
+    
 }

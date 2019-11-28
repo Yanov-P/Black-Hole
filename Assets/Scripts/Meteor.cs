@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Meteor : Enemy
 {
-    
+   
     private void Start()
     {
-        hp = 10;
+        _maxHealth = transform.localScale.x;
+        _currentHealth = _maxHealth;
         
     }
     public void Update()
@@ -23,6 +24,16 @@ public class Meteor : Enemy
     }
 
 
-    
+    public override void TakeDamage(float damage)
+    {
+        (this as Character).TakeDamage(damage);
+        if(_currentHealth <= 0)
+        {
+            var instance = Spawner._poolOfMeteors.First(kvp => (Object)kvp.Key == this).Key;
+            Spawner._poolOfMeteors[instance] = true;
+            _currentHealth = _maxHealth;
+            gameObject.SetActive(false);
+        }
+    }
 
 }

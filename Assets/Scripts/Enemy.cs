@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, ICopyable
+public class Enemy : Character, ICopyable
 {
-    protected float hp;
+    
     public ICopyable Copy()
     {
         return Instantiate(this);
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
-        hp -= damage;
-        if (hp <= 0)
+        base.TakeDamage(damage);
+        if (_currentHealth <= 0)
         {
-            var instance = Spawner._poolOfMeteors.First(kvp => (Object)kvp.Key == this).Key;
-            Spawner._poolOfMeteors[instance] = true;
-            hp = 10;
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
