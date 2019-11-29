@@ -21,6 +21,11 @@ public class Ship : Character
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        Debug.Log("here");
+        if(collision.gameObject.layer == 9)
+        {
+            TakeDamage(1);
+            Debug.Log("kasd");
+        }
     }
 }

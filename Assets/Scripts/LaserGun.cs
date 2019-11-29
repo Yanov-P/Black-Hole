@@ -61,7 +61,7 @@ public class LaserGun : MonoBehaviour,  IWeapon
             lR.SetPosition(1, Vector3.forward * hit.distance);
             distance = hit.distance;
             i++;
-            if (i % 2 == 0)
+            if (i % 2 == 0 && hit.collider.gameObject.layer == 9)
             {
                 hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(1);
             }
@@ -70,7 +70,7 @@ public class LaserGun : MonoBehaviour,  IWeapon
         {
             lR.SetPosition(0, new Vector3(0, 0, 0));
             lR.SetPosition(1, Vector3.forward * distance);
-            if (distance < 100) distance += 1f;
+            if (distance < 500) distance += 10f;
         }
     }
 }
