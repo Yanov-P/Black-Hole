@@ -22,6 +22,7 @@ public class Enemy : Character, ICopyable
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.GetComponent<ICartridge>() != null)
         collision.gameObject.GetComponent<ICartridge>().MakeDamage(this);
     }
 }

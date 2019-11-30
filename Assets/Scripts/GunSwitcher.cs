@@ -25,6 +25,10 @@ public class GunSwitcher : MonoBehaviour
         {
             SwitchWeapon(1);
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OffAllWeapons();
+        }
     }
 
     public void OffAllWeapons()

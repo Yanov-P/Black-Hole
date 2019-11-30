@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
-        _currentHealth = _maxHealth;
+       
     }
 
     public void TakeDamage(float damage)

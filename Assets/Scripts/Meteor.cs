@@ -8,34 +8,33 @@ public class Meteor : Enemy
    
     private void Start()
     {
+        transform.localScale *= Random.Range(1, 3);
         _maxHealth = transform.localScale.x;
         _currentHealth = _maxHealth;
-        transform.localScale *= (float)Random.Range(2, 4) / 2;
         Debug.Log(_currentHealth);
     }
     public void Update()
     {
-        transform.eulerAngles += new Vector3(0, 7, 0);
-        transform.position += new Vector3(0, 0, 0.6f);
+        Move();
         if (transform.position.z > 20)
         {
-            Spawner._poolOfMeteors[this] = true;
             gameObject.SetActive(false);
         }
     }
 
+    private void Move()
+    {
+        transform.eulerAngles += new Vector3(0, 7, 0);
+        transform.position += new Vector3(0, 0, 0.6f);
+    }
 
     public override void TakeDamage(float damage)
     {
         (this as Character).TakeDamage(damage);
         if(_currentHealth <= 0)
         {
-            var instance = Spawner._poolOfMeteors.First(kvp => (Object)kvp.Key == this).Key;
-            Spawner._poolOfMeteors[instance] = true;
             _currentHealth = _maxHealth;
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<MeshCollider>().enabled = false;
-          //gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 

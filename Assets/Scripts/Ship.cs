@@ -10,6 +10,11 @@ public class Ship : Character
         _maxHealth = 10;
         _currentHealth = _maxHealth;
     }
+
+    private void Update()
+    {
+        Debug.Log(_currentHealth);
+    }
     public void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
@@ -19,10 +24,11 @@ public class Ship : Character
         }
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("here");
-        if(collision.gameObject.layer == 9)
+        if(collision.collider.gameObject.layer == 9)
         {
             TakeDamage(1);
             Debug.Log("kasd");
