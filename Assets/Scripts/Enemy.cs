@@ -22,7 +22,15 @@ public class Enemy : Character, ICopyable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<ICartridge>() != null)
-        collision.gameObject.GetComponent<ICartridge>().MakeDamage(this);
+        if (collision.gameObject.GetComponent<ICartridge>() != null)
+        {
+            collision.gameObject.GetComponent<ICartridge>().MakeDamage(this);
+        }
+        if (collision.collider.gameObject.tag == "Player")
+        {
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<Meteor>().enabled = false;
+            gameObject.GetComponent<Meteor>().FullDestroy();
+        }
     }
 }

@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class Meteor : Enemy
 {
-   
+    Dictionary<GameObject, Vector3> _particlesStates = new Dictionary<GameObject, Vector3>();
+    bool _wasStarted = false;
     private void Start()
     {
+        foreach (Transform particle in transform.GetChild(0).transform)
+        {
+            var vector = new Vector3(particle.gameObject.transform.localPosition.x, 
+                particle.gameObject.transform.localPosition.y, particle.gameObject.transform.localPosition.z);
+            _particlesStates.Add(particle.gameObject, vector);
+        }
         transform.localScale *= Random.Range(1, 3);
         _maxHealth = transform.localScale.x;
         _currentHealth = _maxHealth;
-        Debug.Log(_currentHealth);
+        _wasStarted = true;
     }
     public void Update()
     {
@@ -24,8 +31,8 @@ public class Meteor : Enemy
 
     private void Move()
     {
-        transform.eulerAngles += new Vector3(0, 7, 0);
-        transform.position += new Vector3(0, 0, 0.6f);
+        transform.eulerAngles += new Vector3(0, 3, 0);
+        transform.position += new Vector3(0, 0, 3f);
     }
 
     public override void TakeDamage(float damage)
@@ -33,9 +40,40 @@ public class Meteor : Enemy
         (this as Character).TakeDamage(damage);
         if(_currentHealth <= 0)
         {
-            _currentHealth = _maxHealth;
-            gameObject.SetActive(false);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<Meteor>().enabled = false;
+            FullDestroy();
         }
     }
 
+    private void OnEnable()
+    {
+        if (_wasStarted)
+        {
+            _currentHealth = _maxHealth;
+            gameObject.GetComponent<MeshRenderer>().enabled = true;
+            transform.GetChild(0).gameObject.SetActive(false);
+            ResetParticles();
+        }
+    }
+
+    private void ResetParticles()
+    {
+        foreach (Transform particle in transform.GetChild(0).transform)
+        {
+            particle.localPosition = _particlesStates[particle.gameObject];
+            particle.localRotation = Quaternion.Euler(0, 0, 0);
+            particle.gameObject.GetComponent<Rigidbody>().velocity =Vector3.zero;
+        }
+    }
+
+    public void FullDestroy()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        foreach (Transform child in transform.GetChild(0).transform)
+        {
+            child.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-5, 6), Random.Range(-5,6), 20), 
+                ForceMode.Impulse);
+        }
+    }
 }

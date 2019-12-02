@@ -11,6 +11,4 @@ public class Spawner : MonoBehaviour
             m_Copy = prototype.Copy();
             return (Enemy)m_Copy;
     }
-
-    
 }

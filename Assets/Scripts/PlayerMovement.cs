@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _currOffset = new Vector2();
         _distToCamera = Vector3.Distance(transform.position, Camera.main.transform.position);
-        _startPos = Camera.main.WorldToScreenPoint(transform.position);
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, _distToCamera));
+        _startPos = transform.position;
     }
 
     public void BeginDrag(Vector2 offset)
@@ -44,10 +44,8 @@ public class PlayerMovement : MonoBehaviour
         }
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(_currOffset.x, _currOffset.y, _distToCamera) + _startPosWorld);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        transform.rotation = Quaternion.Euler(_currOffset.y*3, 0, _currOffset.x*3);
     }
 
-    private void Update()
-    {
-        //_rightTop.Translate(0.001f, 0, 0, Space.Self);
-    }
+    
 }

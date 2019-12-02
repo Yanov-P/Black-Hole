@@ -89,7 +89,7 @@ public class SimpleGun : MonoBehaviour, IWeapon
         objectToSpawn.transform.position = pool.transform.position;
         objectToSpawn.transform.rotation = pool.transform.rotation;
 
-        objectToSpawn.GetComponent<Rigidbody>().velocity = objectToSpawn.transform.TransformDirection(new Vector3(0, 0, -100));
+        objectToSpawn.GetComponent<Rigidbody>().velocity = objectToSpawn.transform.TransformDirection(new Vector3(0, 0, -300));
         poolDictionary[pool.tag].Enqueue(objectToSpawn);
         return objectToSpawn;
     }

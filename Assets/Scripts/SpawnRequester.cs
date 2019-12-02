@@ -36,6 +36,7 @@ public class SpawnRequester : MonoBehaviour
     {
         Enemy objectToSpawn = _poolOfMeteors.Dequeue();
         objectToSpawn.gameObject.SetActive(true);
+        objectToSpawn.gameObject.GetComponent<Meteor>().enabled = true;
         objectToSpawn.transform.position = _listOfTransforms[Random.Range(0, _listOfTransforms.Count)].position;
         _poolOfMeteors.Enqueue(objectToSpawn);
     }
