@@ -10,7 +10,7 @@ Material:
   m_Name: PlanetDamaged
   m_Shader: {fileID: 4800000, guid: 8d2bb70cbf9db8d4da26e15b26e74248, type: 3}
   m_ShaderKeywords: _EMISSION _GLOSSINESS_FROM_BASE_ALPHA _NORMALMAP _SPECULAR_COLOR
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2050
@@ -95,8 +95,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 1.5516994, g: 0.6142816, b: 0.021957971, a: 1}
-    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+    - _EmissionColor: {r: 0.4013897, g: 0.15971528, b: 0.0063045505, a: 1}
+    - _SpecColor: {r: 0.0004901961, g: 0.0004901961, b: 0.0004901961, a: 0.5}
 --- !u!114 &3510016620755016204
 MonoBehaviour:
   m_ObjectHideFlags: 11
