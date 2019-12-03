@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //[SerializeField]
-    ///private Transform _leftBottom;
-
-    //[SerializeField]
-    //private Transform _rightTop;
-
     private Vector2 _startPos;
     private Vector3 _startPosWorld;
     private float _distToCamera;
-    //private Vector2 _bounds;
     private Vector2 _currOffset;
 
     private void Start()
@@ -44,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
         }
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(_currOffset.x, _currOffset.y, _distToCamera) + _startPosWorld);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        transform.rotation = Quaternion.Euler(_currOffset.y*3, 0, _currOffset.x*3);
     }
 
     

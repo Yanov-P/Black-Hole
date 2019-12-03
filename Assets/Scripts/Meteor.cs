@@ -41,6 +41,7 @@ public class Meteor : Enemy
         if(_currentHealth <= 0)
         {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<MeshCollider>().enabled = false;
             gameObject.GetComponent<Meteor>().enabled = false;
             FullDestroy();
         }
@@ -52,6 +53,7 @@ public class Meteor : Enemy
         {
             _currentHealth = _maxHealth;
             gameObject.GetComponent<MeshRenderer>().enabled = true;
+            gameObject.GetComponent<MeshCollider>().enabled = true;
             transform.GetChild(0).gameObject.SetActive(false);
             ResetParticles();
         }
@@ -72,7 +74,7 @@ public class Meteor : Enemy
         transform.GetChild(0).gameObject.SetActive(true);
         foreach (Transform child in transform.GetChild(0).transform)
         {
-            child.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-5, 6), Random.Range(-5,6), 20), 
+            child.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-50, 60), Random.Range(-50,60), 20), 
                 ForceMode.Impulse);
         }
     }
