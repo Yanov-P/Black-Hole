@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class Meteor : Enemy
 {
+
+    public enum Type
+    {
+        circle,
+        simple,
+        up
+    }
+    public Type _typeOfMeteor;
     Dictionary<GameObject, Vector3> _particlesStates = new Dictionary<GameObject, Vector3>();
     bool _wasStarted = false;
     private void Start()
     {
+        
         foreach (Transform particle in transform.GetChild(0).transform)
         {
             var vector = new Vector3(particle.gameObject.transform.localPosition.x, 
@@ -23,26 +32,47 @@ public class Meteor : Enemy
     public void Update()
     {
         Move();
-        if (transform.position.z > 20)
-        {
-            gameObject.SetActive(false);
-        }
+        
     }
 
     private void Move()
     {
-        transform.eulerAngles += new Vector3(0, 3, 0);
-        transform.position += new Vector3(0, 0, 3f);
+        if (_typeOfMeteor == Type.simple)
+        {
+            transform.eulerAngles += new Vector3(0, 3, 0);
+            transform.position += new Vector3(0, 0, 5f);
+            
+        }
+
+        if (_typeOfMeteor == Type.up)
+        {
+            transform.eulerAngles += new Vector3(0, 3, 0);
+            transform.position += new Vector3(0, 0, 5f);
+            
+        }
+        if (_typeOfMeteor == Type.circle)
+        {
+            currentAngle -= Time.deltaTime * speed;
+            var x = 650 * Mathf.Cos(currentAngle);
+            var z = 650 * Mathf.Sin(currentAngle);
+            transform.position = new Vector3(x, 0, z);
+        }
+        if (transform.position.z > 40)
+        {
+            gameObject.SetActive(false);
+        }
     }
+    float speed = (Mathf.PI * 2) / 20.0f;
+    float currentAngle = 0;
 
     public override void TakeDamage(float damage)
     {
         (this as Character).TakeDamage(damage);
         if(_currentHealth <= 0)
         {
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Meteor>().enabled = false;
             gameObject.GetComponent<MeshCollider>().enabled = false;
-            gameObject.GetComponent<Meteor>().enabled = false;
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
             FullDestroy();
         }
     }
@@ -51,6 +81,7 @@ public class Meteor : Enemy
     {
         if (_wasStarted)
         {
+            GetComponent<Meteor>().enabled = true;
             _currentHealth = _maxHealth;
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             gameObject.GetComponent<MeshCollider>().enabled = true;

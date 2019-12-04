@@ -29,6 +29,7 @@ public class Enemy : Character, ICopyable
         if (collision.collider.gameObject.tag == "Player")
         {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<MeshCollider>().enabled = false;
             gameObject.GetComponent<Meteor>().enabled = false;
             gameObject.GetComponent<Meteor>().FullDestroy();
         }
