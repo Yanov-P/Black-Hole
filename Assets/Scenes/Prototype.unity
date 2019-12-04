@@ -1072,7 +1072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 4107923736904862603}
   smoothSpeed: 0.01
-  offset: {x: 0, y: 10, z: 30}
+  offset: {x: 0, y: 20, z: 80}
 --- !u!114 &1507743991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7294,6 +7294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b78c95b858b354ea635e8c7bcd6dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftBottom: {x: -630.9, y: -38.1}
+  _rightTop: {x: -662.55, y: 30.76}
+  _minDeltaMagnitude: 5
+  _smooth: 100
 --- !u!64 &4107923736904832941
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7328,7 +7332,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4107923736904832939}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -650, y: 0, z: 0}
+  m_LocalPosition: {x: -647.2, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1165658113}
