@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Meteor : Enemy
 {
-
+    public delegate void GameDelegate(int score);
+    public static event GameDelegate gainScore;
+    public static event GameDelegate loseScore;
+    int _radius;
     public enum Type
     {
         circle,
@@ -15,24 +18,38 @@ public class Meteor : Enemy
     public Type _typeOfMeteor;
     Dictionary<GameObject, Vector3> _particlesStates = new Dictionary<GameObject, Vector3>();
     bool _wasStarted = false;
+    int countOfScore;
+    float speed = (Mathf.PI * 2) / 20.0f;
+    float currentAngle = 0;
+
     private void Start()
     {
-        
+
+        GetRandomRadius();
         foreach (Transform particle in transform.GetChild(0).transform)
         {
             var vector = new Vector3(particle.gameObject.transform.localPosition.x, 
                 particle.gameObject.transform.localPosition.y, particle.gameObject.transform.localPosition.z);
             _particlesStates.Add(particle.gameObject, vector);
         }
-        transform.localScale *= Random.Range(1, 3);
-        _maxHealth = transform.localScale.x;
-        _currentHealth = _maxHealth;
+        transform.localScale *= Random.Range(1, 3); // задать в спаун
+        _maxHealth = transform.localScale.x; // задать в спаун
+        _currentHealth = _maxHealth; 
         _wasStarted = true;
+        countOfScore = (int)_maxHealth;
     }
     public void Update()
     {
         Move();
         
+    }
+
+    void GetRandomRadius()
+    {
+        int k = Random.Range(1, 3);
+        if (k == 1)
+            _radius = Random.Range(630, 635);
+        else _radius = Random.Range(665, 670);
     }
 
     private void Move()
@@ -53,8 +70,8 @@ public class Meteor : Enemy
         if (_typeOfMeteor == Type.circle)
         {
             currentAngle -= Time.deltaTime * speed;
-            var x = 650 * Mathf.Cos(currentAngle);
-            var z = 650 * Mathf.Sin(currentAngle);
+            var x = _radius * Mathf.Cos(currentAngle);
+            var z = _radius * Mathf.Sin(currentAngle);
             transform.position = new Vector3(x, 0, z);
         }
         if (transform.position.z > 40)
@@ -62,32 +79,42 @@ public class Meteor : Enemy
             gameObject.SetActive(false);
         }
     }
-    float speed = (Mathf.PI * 2) / 20.0f;
-    float currentAngle = 0;
+    
 
     public override void TakeDamage(float damage)
     {
         (this as Character).TakeDamage(damage);
         if(_currentHealth <= 0)
         {
-            GetComponent<Meteor>().enabled = false;
-            gameObject.GetComponent<MeshCollider>().enabled = false;
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            FullDestroy();
+            MeteorDeath();
         }
     }
 
-    private void OnEnable()
+    void MeteorDeath()
+    {
+        gainScore((int)_maxHealth);
+        GetComponent<Meteor>().enabled = false;
+        gameObject.GetComponent<MeshCollider>().enabled = false;
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        FullDestroy();
+    }
+
+    private void OnEnable() 
     {
         if (_wasStarted)
         {
-            GetComponent<Meteor>().enabled = true;
-            _currentHealth = _maxHealth;
-            gameObject.GetComponent<MeshRenderer>().enabled = true;
-            gameObject.GetComponent<MeshCollider>().enabled = true;
-            transform.GetChild(0).gameObject.SetActive(false);
-            ResetParticles();
+            MeteorReset();
         }
+    }
+
+    void MeteorReset()
+    {
+        GetComponent<Meteor>().enabled = true;
+        _currentHealth = _maxHealth;
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        gameObject.GetComponent<MeshCollider>().enabled = true;
+        transform.GetChild(0).gameObject.SetActive(false);
+        ResetParticles();
     }
 
     private void ResetParticles()
@@ -107,6 +134,22 @@ public class Meteor : Enemy
         {
             child.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-50, 60), Random.Range(-50,60), 20), 
                 ForceMode.Impulse);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<ICartridge>() != null)
+        {
+            collision.gameObject.GetComponent<ICartridge>().MakeDamage(this);
+        }
+        if (collision.collider.gameObject.tag == "Player")
+        {
+            loseScore(10);
+            //gameObject.GetComponent<MeshRenderer>().enabled = false;
+            //gameObject.GetComponent<MeshCollider>().enabled = false;
+            //gameObject.GetComponent<Meteor>().enabled = false;
+            //gameObject.GetComponent<Meteor>().FullDestroy();
         }
     }
 }

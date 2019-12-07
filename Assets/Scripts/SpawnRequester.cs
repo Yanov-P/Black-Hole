@@ -37,7 +37,6 @@ public class SpawnRequester : MonoBehaviour
         Enemy objectToSpawn = _poolOfMeteors.Dequeue();
         objectToSpawn.transform.position = _listOfTransforms[Random.Range(0, _listOfTransforms.Count)].position;
         objectToSpawn.gameObject.SetActive(true);
-        objectToSpawn.gameObject.GetComponent<Meteor>().enabled = true;
         _poolOfMeteors.Enqueue(objectToSpawn);
     }
 
@@ -48,6 +47,13 @@ public class SpawnRequester : MonoBehaviour
         m_Spawn.name = "Asteroid" + ++m_IncrementorDrone;
         var number = Random.Range(0, _listOfTransforms.Count);
         m_Spawn.transform.position = _listOfTransforms[number].position;
+        SetType(number);
+        return m_Spawn;
+    }
+
+
+    void SetType(int number)
+    {
         if (number > 10)
         {
             (m_Spawn as Meteor)._typeOfMeteor = Meteor.Type.circle;
@@ -56,9 +62,7 @@ public class SpawnRequester : MonoBehaviour
         {
             (m_Spawn as Meteor)._typeOfMeteor = Meteor.Type.simple;
         }
-        return m_Spawn;
     }
-
 
     public void FillPool()
     {

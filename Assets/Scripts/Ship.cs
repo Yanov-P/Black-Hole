@@ -31,6 +31,9 @@ public class Ship : Character
         if(collision.collider.gameObject.layer == 9)
         {
             TakeDamage(1);
+            
         }
     }
+
+
 }

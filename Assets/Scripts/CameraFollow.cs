@@ -14,14 +14,9 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
-
-        //Vector3 smoothedPosition = Vector3.Lerp(transform.position, target.position, smoothSpeed);
-        //Vector3 t = target.position;
-        //target.position = smoothedPosition;
-        //transform.LookAt(target);
-        //target.position = t;
+        Vector3 t = target.position;
+        target.position = t;
+        Vector3 newTarget = new Vector3((t.x + 650) / 20.0f - 650, (t.y + 0) / 20.0f - 0, 0);
+        transform.LookAt(newTarget);
     }
 }
