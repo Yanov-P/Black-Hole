@@ -93,7 +93,6 @@ public class Meteor : Enemy
     void MeteorDeath()
     {
         gainScore((int)_maxHealth);
-        GetComponent<Meteor>().enabled = false;
         gameObject.GetComponent<MeshCollider>().enabled = false;
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         FullDestroy();
@@ -146,10 +145,6 @@ public class Meteor : Enemy
         if (collision.collider.gameObject.tag == "Player")
         {
             loseScore(10);
-            //gameObject.GetComponent<MeshRenderer>().enabled = false;
-            //gameObject.GetComponent<MeshCollider>().enabled = false;
-            //gameObject.GetComponent<Meteor>().enabled = false;
-            //gameObject.GetComponent<Meteor>().FullDestroy();
         }
     }
 }

@@ -22,9 +22,14 @@ public class SpawnRequester : MonoBehaviour
         }
         
     }
+
     private void Start()
     {
         FillPool();
+        foreach(var k in _listOfTransforms)
+        {
+            Debug.Log(k.position);
+        }
     }
     void StartSpawn()
     {
@@ -35,7 +40,9 @@ public class SpawnRequester : MonoBehaviour
     void Spawn()
     {
         Enemy objectToSpawn = _poolOfMeteors.Dequeue();
-        objectToSpawn.transform.position = _listOfTransforms[Random.Range(0, _listOfTransforms.Count)].position;
+        var number = Random.Range(0, _listOfTransforms.Count);
+        SetType(number,objectToSpawn);
+        objectToSpawn.transform.position = _listOfTransforms[number].position;
         objectToSpawn.gameObject.SetActive(true);
         _poolOfMeteors.Enqueue(objectToSpawn);
     }
@@ -45,16 +52,13 @@ public class SpawnRequester : MonoBehaviour
     {
         m_Spawn = m_Spawner.SpawnEnemy(m_Meteor[Random.Range(0,m_Meteor.Count)]);
         m_Spawn.name = "Asteroid" + ++m_IncrementorDrone;
-        var number = Random.Range(0, _listOfTransforms.Count);
-        m_Spawn.transform.position = _listOfTransforms[number].position;
-        SetType(number);
         return m_Spawn;
     }
 
 
-    void SetType(int number)
+    void SetType(int number, Enemy m_Spawn)
     {
-        if (number > 10)
+        if (number > 9)
         {
             (m_Spawn as Meteor)._typeOfMeteor = Meteor.Type.circle;
         }
