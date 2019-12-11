@@ -13,6 +13,8 @@ public class SpawnRequester : MonoBehaviour
     public Spawner m_Spawner;
     private Enemy m_Spawn;
     private int m_IncrementorDrone = 0;
+
+    public Vector3 notAllowToSet; 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.D))
@@ -26,10 +28,7 @@ public class SpawnRequester : MonoBehaviour
     private void Start()
     {
         FillPool();
-        foreach(var k in _listOfTransforms)
-        {
-            Debug.Log(k.position);
-        }
+        
     }
     void StartSpawn()
     {
@@ -42,12 +41,36 @@ public class SpawnRequester : MonoBehaviour
         Enemy objectToSpawn = _poolOfMeteors.Dequeue();
         var number = Random.Range(0, _listOfTransforms.Count);
         SetType(number,objectToSpawn);
-        objectToSpawn.transform.position = _listOfTransforms[number].position;
+        objectToSpawn.transform.position = _listOfTransforms[number].position;//Ето по точкам определенным
+        //objectToSpawn.transform.position = GetFreePositions(objectToSpawn);
         objectToSpawn.gameObject.SetActive(true);
+        objectToSpawn.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         _poolOfMeteors.Enqueue(objectToSpawn);
     }
 
+    public Vector3 GetFreePositions(Enemy objectToSpawn)
+    {
+        bool mozhno = false;
+        while (!mozhno)
+        {
+            var check = Random.Range(0, 2);
+            if (check == 0)
+            {
+                objectToSpawn.transform.position = new Vector3(Random.Range(-640, -630), Random.Range(5, 20), -1000);
+            }
+            else
+            {
+                objectToSpawn.transform.position = new Vector3(Random.Range(-670, -660), Random.Range(-20, -5), -1000);
+            }
 
+            if(objectToSpawn.transform.position.x<notAllowToSet.x+12.5f && objectToSpawn.transform.position.x > notAllowToSet.x - 12.5f &&
+                objectToSpawn.transform.position.y < notAllowToSet.y - 12.5f && objectToSpawn.transform.position.y > notAllowToSet.y + 12.5f)
+            {
+                mozhno = true; 
+            }
+        }
+        return objectToSpawn.transform.position;
+    } 
     public Enemy Create()
     {
         m_Spawn = m_Spawner.SpawnEnemy(m_Meteor[Random.Range(0,m_Meteor.Count)]);

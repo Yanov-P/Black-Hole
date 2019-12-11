@@ -430,6 +430,7 @@ MonoBehaviour:
   - {fileID: 1191890321121741021, guid: ae05d65d43dd24e4c8f5ccd13583f88f, type: 3}
   - {fileID: 343522010661159949, guid: a9be0d326972f70429e26589006163e2, type: 3}
   m_Spawner: {fileID: 481899903}
+  notAllowToSet: {x: 0, y: 0, z: 0}
 --- !u!1 &396015130
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,6 +988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb31e273675e924fb3b07c35251af63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnRequester: {fileID: 360736618}
   _listOfTransforms:
   - {fileID: 1754487640}
   - {fileID: 2133382318}

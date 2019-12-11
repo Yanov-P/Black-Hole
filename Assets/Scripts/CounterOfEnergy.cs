@@ -5,7 +5,6 @@ using UnityEngine;
 public class CounterOfEnergy : MonoBehaviour
 {
     int _score;
-
     
     public int Score
     {
@@ -23,10 +22,7 @@ public class CounterOfEnergy : MonoBehaviour
             }
         }
     }
-    private void Update()
-    {
-        Debug.Log(Score);
-    }
+    
     private void Start()
     {
         Meteor.gainScore += GainScore;
@@ -36,7 +32,6 @@ public class CounterOfEnergy : MonoBehaviour
 
     public void GainScore(int score)
     {
-        Debug.Log(Score);
         Score += score;
     }
 

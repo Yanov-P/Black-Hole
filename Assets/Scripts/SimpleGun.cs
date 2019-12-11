@@ -82,13 +82,10 @@ public class SimpleGun : MonoBehaviour, IWeapon
         {
             return null;
         }
-
         GameObject objectToSpawn = poolDictionary[pool.tag].Dequeue();
-
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = pool.transform.position;
         objectToSpawn.transform.rotation = pool.transform.rotation;
-
         objectToSpawn.GetComponent<Rigidbody>().velocity = objectToSpawn.transform.TransformDirection(new Vector3(0, 0, -500));
         poolDictionary[pool.tag].Enqueue(objectToSpawn);
         return objectToSpawn;

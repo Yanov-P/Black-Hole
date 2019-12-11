@@ -8,7 +8,10 @@ public class Meteor : Enemy
     public delegate void GameDelegate(int score);
     public static event GameDelegate gainScore;
     public static event GameDelegate loseScore;
+
     int _radius;
+
+    bool _isBroken = false;
     public enum Type
     {
         circle,
@@ -32,15 +35,18 @@ public class Meteor : Enemy
                 particle.gameObject.transform.localPosition.y, particle.gameObject.transform.localPosition.z);
             _particlesStates.Add(particle.gameObject, vector);
         }
-        transform.localScale *= Random.Range(1, 3); // задать в спаун
-        _maxHealth = transform.localScale.x; // задать в спаун
+        transform.localScale *= Random.Range(1, 3);
+        _maxHealth = transform.localScale.x;
         _currentHealth = _maxHealth; 
         _wasStarted = true;
         countOfScore = (int)_maxHealth;
     }
     public void Update()
     {
-        Move();
+        if (_isBroken)
+            SimpleMove();
+        else
+            Move();
         
     }
 
@@ -57,14 +63,14 @@ public class Meteor : Enemy
         if (_typeOfMeteor == Type.simple)
         {
             transform.eulerAngles += new Vector3(0, 3, 0);
-            transform.position += new Vector3(0, 0, 5f);
+            transform.position += new Vector3(0, 0, 2f);
             
         }
 
         if (_typeOfMeteor == Type.up)
         {
             transform.eulerAngles += new Vector3(0, 3, 0);
-            transform.position += new Vector3(0, 0, 5f);
+            transform.position += new Vector3(0, 0, 2f);
             
         }
         if (_typeOfMeteor == Type.circle)
@@ -80,7 +86,14 @@ public class Meteor : Enemy
         }
     }
     
-
+    void SimpleMove()
+    {
+        transform.position += new Vector3(0, 0, 3f);
+        if (transform.position.z > 40)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     public override void TakeDamage(float damage)
     {
         (this as Character).TakeDamage(damage);
@@ -92,6 +105,7 @@ public class Meteor : Enemy
 
     void MeteorDeath()
     {
+        _isBroken = true; 
         gainScore((int)_maxHealth);
         gameObject.GetComponent<MeshCollider>().enabled = false;
         gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -103,12 +117,17 @@ public class Meteor : Enemy
         if (_wasStarted)
         {
             MeteorReset();
+
         }
     }
 
     void MeteorReset()
     {
+        transform.localScale = new Vector3(7, 7, 7);
+        transform.localScale *= Random.Range(1, 3);
+        _maxHealth = transform.localScale.x;
         GetComponent<Meteor>().enabled = true;
+        _isBroken = false;
         _currentHealth = _maxHealth;
         gameObject.GetComponent<MeshRenderer>().enabled = true;
         gameObject.GetComponent<MeshCollider>().enabled = true;
