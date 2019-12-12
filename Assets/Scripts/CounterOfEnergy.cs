@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CounterOfEnergy : MonoBehaviour
 {
-    int _score;
-    
+    int _score = 0;
+
+    [SerializeField]
+    Text _textScore;
+
     public int Score
     {
         get
@@ -27,16 +31,18 @@ public class CounterOfEnergy : MonoBehaviour
     {
         Meteor.gainScore += GainScore;
         Meteor.loseScore += LoseScore;
-        
+        _textScore.text = Score.ToString();
     }
 
     public void GainScore(int score)
     {
         Score += score;
+        _textScore.text = Score.ToString();
     }
 
     void LoseScore(int score)
     {
         Score -= score;
+        _textScore.text = Score.ToString();
     }
 }

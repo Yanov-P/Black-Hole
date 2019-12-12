@@ -19,7 +19,7 @@ public class Explosion : MonoBehaviour
         yield return new WaitForSeconds(2);
         foreach (Transform child in transform)
         {
-            child.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(40,0,40);
+            child.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(40,0,10);
             child.gameObject.GetComponent<Rigidbody>().AddTorque(Vector3.forward*10);
         }
     }
@@ -31,7 +31,7 @@ public class Explosion : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
-            child.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 1000), Random.Range(-400, 200), 100),
+            child.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 600), Random.Range(-500, -100), 10),
                 ForceMode.Impulse);
         }
 

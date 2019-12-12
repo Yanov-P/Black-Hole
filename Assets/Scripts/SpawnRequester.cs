@@ -22,13 +22,12 @@ public class SpawnRequester : MonoBehaviour
             StartSpawn();
             
         }
-        
     }
 
     private void Start()
     {
         FillPool();
-        
+        Invoke("StartSpawn", 5.5f);
     }
     void StartSpawn()
     {
@@ -41,35 +40,33 @@ public class SpawnRequester : MonoBehaviour
         Enemy objectToSpawn = _poolOfMeteors.Dequeue();
         var number = Random.Range(0, _listOfTransforms.Count);
         SetType(number,objectToSpawn);
-        objectToSpawn.transform.position = _listOfTransforms[number].position;//Ето по точкам определенным
-        //objectToSpawn.transform.position = GetFreePositions(objectToSpawn);
+        GetFreePositions(objectToSpawn);
         objectToSpawn.gameObject.SetActive(true);
         objectToSpawn.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         _poolOfMeteors.Enqueue(objectToSpawn);
     }
 
-    public Vector3 GetFreePositions(Enemy objectToSpawn)
+    public void GetFreePositions(Enemy objectToSpawn)
     {
-        bool mozhno = false;
-        while (!mozhno)
+        if (notAllowToSet.x < -650)
         {
-            var check = Random.Range(0, 2);
-            if (check == 0)
-            {
-                objectToSpawn.transform.position = new Vector3(Random.Range(-640, -630), Random.Range(5, 20), -1000);
-            }
+            if(notAllowToSet.y>0)
+                objectToSpawn.transform.position = new Vector3(Random.Range(notAllowToSet.x+7,-640), 
+                    Random.Range(-35, notAllowToSet.y-7), -1000);
             else
-            {
-                objectToSpawn.transform.position = new Vector3(Random.Range(-670, -660), Random.Range(-20, -5), -1000);
-            }
-
-            if(objectToSpawn.transform.position.x<notAllowToSet.x+12.5f && objectToSpawn.transform.position.x > notAllowToSet.x - 12.5f &&
-                objectToSpawn.transform.position.y < notAllowToSet.y - 12.5f && objectToSpawn.transform.position.y > notAllowToSet.y + 12.5f)
-            {
-                mozhno = true; 
-            }
+                objectToSpawn.transform.position = new Vector3(Random.Range(notAllowToSet.x + 7, -640), 
+                    Random.Range(notAllowToSet.y + 7, 30), -1000);
         }
-        return objectToSpawn.transform.position;
+        else
+        {
+            if (notAllowToSet.y > 0)
+                objectToSpawn.transform.position = new Vector3(Random.Range(-660, notAllowToSet.x - 7), 
+                    Random.Range(-35, notAllowToSet.y - 7), -1000);
+            else
+                objectToSpawn.transform.position = new Vector3(Random.Range(-660, notAllowToSet.x - 7), 
+                    Random.Range(notAllowToSet.y + 7, 30), -1000);
+        }
+        
     } 
     public Enemy Create()
     {

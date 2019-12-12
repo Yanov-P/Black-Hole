@@ -15,6 +15,11 @@ public class GunSwitcher : MonoBehaviour
         _listOfWeapons[i].GetComponent<IWeapon>().StartShooting();
     }
 
+
+    public void StartWeapon()
+    {
+        SwitchWeapon(0);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))

@@ -10,8 +10,11 @@ public class Meteor : Enemy
     public static event GameDelegate loseScore;
 
     int _radius;
+    int countOfScore;
 
     bool _isBroken = false;
+    bool _wasStarted = false;
+
     public enum Type
     {
         circle,
@@ -19,59 +22,65 @@ public class Meteor : Enemy
         up
     }
     public Type _typeOfMeteor;
+
+
     Dictionary<GameObject, Vector3> _particlesStates = new Dictionary<GameObject, Vector3>();
-    bool _wasStarted = false;
-    int countOfScore;
-    float speed = (Mathf.PI * 2) / 20.0f;
+
+
+    float speed = (Mathf.PI * 2) / 40.0f;
     float currentAngle = 0;
 
     private void Start()
     {
-
         GetRandomRadius();
-        foreach (Transform particle in transform.GetChild(0).transform)
-        {
-            var vector = new Vector3(particle.gameObject.transform.localPosition.x, 
-                particle.gameObject.transform.localPosition.y, particle.gameObject.transform.localPosition.z);
-            _particlesStates.Add(particle.gameObject, vector);
-        }
-        transform.localScale *= Random.Range(1, 3);
-        _maxHealth = transform.localScale.x;
-        _currentHealth = _maxHealth; 
-        _wasStarted = true;
-        countOfScore = (int)_maxHealth;
+        StartSet();
     }
+
+
+   
     public void Update()
     {
         if (_isBroken)
             SimpleMove();
         else
             Move();
-        
+    }
+    void StartSet()
+    {
+        foreach (Transform particle in transform.GetChild(0).transform)
+        {
+            var vector = new Vector3(particle.gameObject.transform.localPosition.x,
+                particle.gameObject.transform.localPosition.y, particle.gameObject.transform.localPosition.z);
+            _particlesStates.Add(particle.gameObject, vector);
+        }
+        var random= Random.Range(3, 5);
+        transform.localScale = new Vector3(random, random, random);
+        _maxHealth = transform.localScale.x;
+        _currentHealth = _maxHealth;
+        _wasStarted = true;
+        countOfScore = (int)_maxHealth;
     }
 
     void GetRandomRadius()
     {
         int k = Random.Range(1, 3);
         if (k == 1)
-            _radius = Random.Range(630, 635);
-        else _radius = Random.Range(665, 670);
+            _radius = Random.Range(640, 645);
+        else _radius = Random.Range(655, 660);
     }
 
     private void Move()
     {
         if (_typeOfMeteor == Type.simple)
         {
-            transform.eulerAngles += new Vector3(0, 3, 0);
-            transform.position += new Vector3(0, 0, 2f);
-            
+            transform.eulerAngles += new Vector3(0, 1, 0);
+            transform.position += new Vector3(0, 0, 1.5f);
         }
 
         if (_typeOfMeteor == Type.up)
         {
-            transform.eulerAngles += new Vector3(0, 3, 0);
-            transform.position += new Vector3(0, 0, 2f);
-            
+            transform.eulerAngles += new Vector3(0, 1, 0);
+            transform.position += new Vector3(0, 0, 1.5f);
         }
         if (_typeOfMeteor == Type.circle)
         {
@@ -88,7 +97,7 @@ public class Meteor : Enemy
     
     void SimpleMove()
     {
-        transform.position += new Vector3(0, 0, 3f);
+        transform.position += new Vector3(0, 0, 1.5f);
         if (transform.position.z > 40)
         {
             gameObject.SetActive(false);
@@ -106,7 +115,7 @@ public class Meteor : Enemy
     void MeteorDeath()
     {
         _isBroken = true; 
-        gainScore((int)_maxHealth);
+        gainScore(countOfScore);
         gameObject.GetComponent<MeshCollider>().enabled = false;
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         FullDestroy();
@@ -117,14 +126,13 @@ public class Meteor : Enemy
         if (_wasStarted)
         {
             MeteorReset();
-
         }
     }
 
     void MeteorReset()
     {
-        transform.localScale = new Vector3(7, 7, 7);
-        transform.localScale *= Random.Range(1, 3);
+        var scale = Random.Range(3, 5);
+        transform.localScale = new Vector3(scale, scale, scale);
         _maxHealth = transform.localScale.x;
         GetComponent<Meteor>().enabled = true;
         _isBroken = false;

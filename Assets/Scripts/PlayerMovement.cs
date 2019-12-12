@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void BeginDrag(Vector2 offset)
     {
+        //on Weapon
+        Ship.Instance._gunSwitcher.SwitchWeapon(0);
         _startPos = transform.position;
         _lastOffs = offset;
     }
@@ -57,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void EndDrag()
     {
+        //off weapon
+        Ship.Instance._gunSwitcher.OffAllWeapons();
         _delta = Vector2.zero;
         _targetRotation = Quaternion.Euler(0, 0, 0);
     }
